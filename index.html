@@ -3,529 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lynqo - Dashboard</title>
+    <title>Lynqo — Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- App Container -->
     <div class="app">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-overlay" id="sidebarOverlay"></div>
-            <div class="sidebar-inner">
-                <div class="sidebar-logo">
-                    <div class="logo-icon">L</div>
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                    <img src="img/icon1.png" alt="" width="30px">
+                </div>
                     <span class="logo-text">Lynqo</span>
                 </div>
+            </div>
 
-                <nav class="sidebar-nav">
-                    <div class="nav-section">
-                        <span class="nav-section-label">Main</span>
-                        <a href="#" class="nav-item active" data-page="dashboard">
-                            <i data-lucide="layout-dashboard"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="#" class="nav-item" data-page="products">
-                            <i data-lucide="package"></i>
-                            <span>Products</span>
-                        </a>
-                        <a href="#" class="nav-item" data-page="orders">
-                            <i data-lucide="shopping-cart"></i>
-                            <span>Orders</span>
-                        </a>
-                        <a href="#" class="nav-item" data-page="customers">
-                            <i data-lucide="users"></i>
-                            <span>Customers</span>
-                        </a>
-                    </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">MAIN</div>
+                    <a href="dashboard.html" class="nav-item active">
+                        <i data-lucide="layout-dashboard"></i><span>Dashboard</span>
+                    </a>
+                    <a href="products.html" class="nav-item">
+                        <i data-lucide="package"></i><span>Products</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="shopping-bag"></i><span>Orders</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="users"></i><span>Customers</span>
+                    </a>
+                </div>
 
-                    <div class="nav-section">
-                        <span class="nav-section-label">Finance</span>
-                        <a href="#" class="nav-item">
-                            <i data-lucide="wallet"></i>
-                            <span>Wallet</span>
-                        </a>
-                        <a href="#" class="nav-item">
-                            <i data-lucide="arrow-left-right"></i>
-                            <span>Transactions</span>
-                        </a>
-                        <a href="#" class="nav-item">
-                            <i data-lucide="arrow-down-to-line"></i>
-                            <span>Withdrawals</span>
-                        </a>
-                    </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">FINANCE</div>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="wallet"></i><span>Wallet</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="arrow-left-right"></i><span>Transactions</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="banknote"></i><span>Withdrawals</span>
+                    </a>
+                </div>
 
-                    <div class="nav-section">
-                        <span class="nav-section-label">Settings</span>
-                        <a href="#" class="nav-item">
-                            <i data-lucide="settings-2"></i>
-                            <span>Store Settings</span>
-                        </a>
-                        <a href="#" class="nav-item">
-                            <i data-lucide="shield"></i>
-                            <span>Security</span>
-                        </a>
-                    </div>
-                </nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">SETTINGS</div>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="store"></i><span>Store Settings</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="shield"></i><span>Security</span>
+                    </a>
+                </div>
+            </nav>
 
-                <div class="sidebar-profile" id="profileBtn">
-                    <div class="profile-avatar">JD</div>
+            <div class="sidebar-profile">
+                <div class="profile-dropup" id="profileDropup">
+                    <a href="#" class="dropup-item"><i data-lucide="user"></i><span>My Profile</span></a>
+                    <a href="#" class="dropup-item" onclick="openCreateStoreModal(event)"><i data-lucide="plus-circle"></i><span>Create Store</span></a>
+                    <a href="#" class="dropup-item"><i data-lucide="settings"></i><span>Account Settings</span></a>
+                    <div class="dropup-divider"></div>
+                    <a href="#" class="dropup-item logout"><i data-lucide="log-out"></i><span>Logout</span></a>
+                </div>
+                <div class="profile-trigger" onclick="toggleProfileDropup()">
+                    <img src="http://static.photos/people/200x200/42" alt="avatar" class="profile-avatar">
                     <div class="profile-info">
                         <span class="profile-name">John Doe</span>
-                        <span class="profile-email">john@example.com</span>
+                        <span class="profile-email">john@lynqo.com</span>
                     </div>
                     <i data-lucide="chevron-up" class="profile-chevron"></i>
-
-                    <div class="profile-dropup" id="profileDropup">
-                        <a href="#" class="dropup-item" id="createStoreBtn">
-                            <i data-lucide="store"></i>
-                            <span>Create Store</span>
-                        </a>
-                        <a href="#" class="dropup-item">
-                            <i data-lucide="user"></i>
-                            <span>My Profile</span>
-                        </a>
-                        <a href="#" class="dropup-item">
-                            <i data-lucide="settings-2"></i>
-                            <span>Account Settings</span>
-                        </a>
-                        <div class="dropup-divider"></div>
-                        <a href="#" class="dropup-item logout-item">
-                            <i data-lucide="log-out"></i>
-                            <span>Logout</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main">
-            <!-- Top Bar -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">
                         <i data-lucide="menu"></i>
                     </button>
-                    <div class="search-box">
-                        <i data-lucide="search"></i>
-                        <input type="text" placeholder="Search products, orders...">
-                    </div>
                 </div>
-                <div class="topbar-right">
-                    <button class="topbar-icon-btn" id="notifBtn">
-                        <i data-lucide="bell"></i>
-                        <span class="notif-badge">3</span>
-                    </button>
-                    <div class="topbar-profile-mini">
-                        <div class="profile-avatar-mini">JD</div>
+                <div class="top-bar-right">
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" onclick="toggleNotifications()">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="notification-header">
+                                <span class="notification-title">Notifications</span>
+                                <a href="#" class="notification-mark">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notification-dot"></div>
+                                    <div class="notification-content">
+                                        <p>New order <strong>#ORD-7291</strong> from Sarah Johnson</p>
+                                        <span class="notification-time">2 min ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notification-dot"></div>
+                                    <div class="notification-content">
+                                        <p>Payment of <strong>$45.00</strong> received successfully</p>
+                                        <span class="notification-time">2 min ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notification-dot"></div>
+                                    <div class="notification-content">
+                                        <p>Product <strong>"Design Kit Pro"</strong> was purchased</p>
+                                        <span class="notification-time">15 min ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-dot read"></div>
+                                    <div class="notification-content">
+                                        <p>Withdrawal of <strong>$500.00</strong> processed</p>
+                                        <span class="notification-time">1 hour ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-dot read"></div>
+                                    <div class="notification-content">
+                                        <p>Store settings updated successfully</p>
+                                        <span class="notification-time">3 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="currency-select-wrapper">
+                        <div class="currency-select-trigger" onclick="toggleCurrencyDropdown()">
+                            <span id="selectedCurrency">USD</span>
+                            <svg class="currency-arrow" width="12" height="12" viewBox="0 0 
+                            24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="currency-select-options" id="currencyOptions">
+                            <div class="currency-option" onclick="selectCurrency('USD')">USD</div>
+                            <div class="currency-option" onclick="selectCurrency('NGN')">NGN</div>
+                        </div>
+                    </div>
+
+                    <button class="create-product-btn" onclick="openCreateProduct()" title="Create Product">
+                        <i data-lucide="plus"></i>
+                    </button>
                 </div>
             </header>
 
-            <!-- Notification Panel -->
-            <div class="notification-panel" id="notifPanel">
-                <div class="notif-header">
-                    <span class="notif-title">Notifications</span>
-                    <button class="notif-mark-read">Mark all as read</button>
-                </div>
-                <div class="notif-list">
-                    <div class="notif-item unread">
-                        <div class="notif-dot"></div>
-                        <div class="notif-icon-wrap blue"><i data-lucide="shopping-bag"></i></div>
-                        <div class="notif-content">
-                            <p>New order <strong>#1234</strong> received from Sarah K.</p>
-                            <span class="notif-time">2 mins ago</span>
+            <div class="content-area">
+                <!-- Balance Section -->
+                <div class="balance-section">
+                    <div class="balance-left">
+                        <span class="balance-label">Balance</span>
+                        <div class="balance-amount" id="mainBalance">$12,450.00</div>
+                        <div class="book-balance">
+                            <span class="book-balance-label">Book Balance</span>
+                            <span class="book-balance-amount" id="bookBalance">$3,200.00</span>
+                            <span class="book-balance-info" title="Balance scheduled for next payout">
+                                <i data-lucide="info"></i>
+                            </span>
                         </div>
                     </div>
-                    <div class="notif-item unread">
-                        <div class="notif-dot"></div>
-                        <div class="notif-icon-wrap green"><i data-lucide="dollar-sign"></i></div>
-                        <div class="notif-content">
-                            <p>Payment of <strong>$450.00</strong> has been confirmed</p>
-                            <span class="notif-time">15 mins ago</span>
+                    <div class="balance-stats">
+                        <div class="balance-stat">
+                            <span class="stat-value">677</span>
+                            <span class="stat-label">Total Sales</span>
                         </div>
-                    </div>
-                    <div class="notif-item unread">
-                        <div class="notif-dot"></div>
-                        <div class="notif-icon-wrap purple"><i data-lucide="package"></i></div>
-                        <div class="notif-content">
-                            <p>Product <strong>"Design Kit Pro"</strong> was purchased 5 times today</p>
-                            <span class="notif-time">1 hour ago</span>
+                        <div class="stat-divider"></div>
+                        <div class="balance-stat">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Products</span>
                         </div>
-                    </div>
-                    <div class="notif-item">
-                        <div class="notif-dot hidden"></div>
-                        <div class="notif-icon-wrap orange"><i data-lucide="user-plus"></i></div>
-                        <div class="notif-content">
-                            <p>New customer <strong>Mike Johnson</strong> registered</p>
-                            <span class="notif-time">3 hours ago</span>
-                        </div>
-                    </div>
-                    <div class="notif-item">
-                        <div class="notif-dot hidden"></div>
-                        <div class="notif-icon-wrap blue"><i data-lucide="settings-2"></i></div>
-                        <div class="notif-content">
-                            <p>Your store settings were updated successfully</p>
-                            <span class="notif-time">5 hours ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Area -->
-            <div class="content">
-                <!-- Dashboard Page -->
-                <div id="page-dashboard" class="page active">
-                    <!-- Balance Section -->
-                    <div class="balance-section">
-                        <div class="balance-row">
-                            <div class="balance-info">
-                                <span class="balance-label">Available Balance</span>
-                                <div class="balance-amount-row">
-                                    <span class="balance-amount" id="balanceAmount">$12,450.00</span>
-                                    <div class="currency-toggle">
-                                        <button class="currency-btn active" data-currency="USD">USD</button>
-                                        <button class="currency-btn" data-currency="NGN">NGN</button>
-                                    </div>
-                                </div>
-                                <div class="book-balance-row">
-                                    <span class="book-balance-text">Book Balance: <span id="bookBalance">$2,340.00</span></span>
-                                    <span class="book-balance-info" title="Funds scheduled for next payout">
-                                        <i data-lucide="info"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <button class="create-product-btn" id="createProductBtn" title="Create Product">
-                                <i data-lucide="plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Stats Cards -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon-wrap" style="background: #EFF6FF; color: #3B82F6;">
-                                <i data-lucide="package"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value">24</span>
-                                <span class="stat-label">Total Products</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon-wrap" style="background: #F0FDF4; color: #22C55E;">
-                                <i data-lucide="shopping-bag"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value">156</span>
-                                <span class="stat-label">Total Orders</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon-wrap" style="background: #FFF7ED; color: #F97316;">
-                                <i data-lucide="users"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value">89</span>
-                                <span class="stat-label">Customers</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon-wrap" style="background: #FAF5FF; color: #A855F7;">
-                                <i data-lucide="trending-up"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value">3.2%</span>
-                                <span class="stat-label">Conversion</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Charts Row -->
-                    <div class="charts-row">
-                        <div class="card chart-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Revenue Overview</h3>
-                                <div class="chart-period-pills">
-                                    <span class="period-pill">7D</span>
-                                    <span class="period-pill active">1M</span>
-                                    <span class="period-pill">3M</span>
-                                    <span class="period-pill">1Y</span>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="revenueChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="card orders-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Recent Orders</h3>
-                                <a href="#" class="view-all-link">View All</a>
-                            </div>
-                            <div class="card-body">
-                                <table class="orders-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Order</th>
-                                            <th>Customer</th>
-                                            <th>Product</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="order-id">#1234</td>
-                                            <td>Sarah K.</td>
-                                            <td>Design Kit Pro</td>
-                                            <td>$49.00</td>
-                                            <td><span class="status-badge completed">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="order-id">#1233</td>
-                                            <td>Mike J.</td>
-                                            <td>UI Template Pack</td>
-                                            <td>$29.00</td>
-                                            <td><span class="status-badge pending">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="order-id">#1232</td>
-                                            <td>Anna P.</td>
-                                            <td>Code Snippets</td>
-                                            <td>$19.00</td>
-                                            <td><span class="status-badge completed">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="order-id">#1231</td>
-                                            <td>David R.</td>
-                                            <td>Ebook Bundle</td>
-                                            <td>$39.00</td>
-                                            <td><span class="status-badge processing">Processing</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="order-id">#1230</td>
-                                            <td>Lisa M.</td>
-                                            <td>Icon Set</td>
-                                            <td>$15.00</td>
-                                            <td><span class="status-badge completed">Completed</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Top Products -->
-                    <div class="top-products-section">
-                        <div class="section-header">
-                            <h3 class="section-title">Top Products</h3>
-                            <a href="#" class="view-all-link" data-page="products">View All</a>
-                        </div>
-                        <div class="top-products-grid">
-                            <div class="top-product-card">
-                                <div class="top-product-img">
-                                    <img src="http://static.photos/technology/200x200/10" alt="Design Kit Pro">
-                                </div>
-                                <div class="top-product-info">
-                                    <span class="top-product-name">Design Kit Pro</span>
-                                    <span class="top-product-price">$49.00</span>
-                                    <span class="top-product-sales">142 sales</span>
-                                </div>
-                            </div>
-                            <div class="top-product-card">
-                                <div class="top-product-img">
-                                    <img src="http://static.photos/minimal/200x200/22" alt="UI Template Pack">
-                                </div>
-                                <div class="top-product-info">
-                                    <span class="top-product-name">UI Template Pack</span>
-                                    <span class="top-product-price">$29.00</span>
-                                    <span class="top-product-sales">98 sales</span>
-                                </div>
-                            </div>
-                            <div class="top-product-card">
-                                <div class="top-product-img">
-                                    <img src="http://static.photos/workspace/200x200/33" alt="Code Snippets">
-                                </div>
-                                <div class="top-product-info">
-                                    <span class="top-product-name">Code Snippets</span>
-                                    <span class="top-product-price">$19.00</span>
-                                    <span class="top-product-sales">76 sales</span>
-                                </div>
-                            </div>
-                            <div class="top-product-card">
-                                <div class="top-product-img">
-                                    <img src="http://static.photos/education/200x200/44" alt="Ebook Bundle">
-                                </div>
-                                <div class="top-product-info">
-                                    <span class="top-product-name">Ebook Bundle</span>
-                                    <span class="top-product-price">$39.00</span>
-                                    <span class="top-product-sales">54 sales</span>
-                                </div>
-                            </div>
+                        <div class="stat-divider"></div>
+                        <div class="balance-stat">
+                            <span class="stat-value">2</span>
+                            <span class="stat-label">Stores</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Products Page -->
-                <div id="page-products" class="page">
-                    <div class="page-header">
-                        <div>
-                            <h1 class="page-title">Products</h1>
-                            <p class="page-subtitle">Manage your digital and physical products</p>
-                        </div>
-                        <button class="btn-primary" id="createProductBtn2">
-                            <i data-lucide="plus"></i>
-                            New Product
-                        </button>
-                    </div>
-
-                    <div class="products-toolbar">
-                        <div class="search-filter-wrap">
-                            <div class="search-box-flat">
-                                <i data-lucide="search"></i>
-                                <input type="text" placeholder="Search products...">
-                            </div>
-                            <div class="custom-dropdown" data-dropdown="productFilter">
-                                <div class="dropdown-trigger">
-                                    <span>All Products</span>
-                                    <i data-lucide="chevron-down"></i>
-                                </div>
-                                <div class="dropdown-menu">
-                                    <div class="dropdown-item active" data-value="all">All Products</div>
-                                    <div class="dropdown-item" data-value="digital">Digital</div>
-                                    <div class="dropdown-item" data-value="physical">Physical</div>
-                                    <div class="dropdown-item" data-value="free">Free</div>
-                                    <div class="dropdown-item" data-value="paid">Paid</div>
-                                </div>
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Revenue</h3>
+                            <div class="chart-period">
+                                <button class="period-btn">7D</button>
+                                <button class="period-btn active">30D</button>
+                                <button class="period-btn">90D</button>
                             </div>
                         </div>
-                        <div class="view-toggle">
-                            <button class="view-toggle-btn active" data-view="grid"><i data-lucide="grid-3x3"></i></button>
-                            <button class="view-toggle-btn" data-view="list"><i data-lucide="list"></i></button>
+                        <div class="chart-wrapper">
+                            <canvas id="revenueChart"></canvas>
                         </div>
                     </div>
-
-                    <div class="products-grid-page" id="productsView">
-                        <!-- Product 1 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge digital">Digital</span>
-                                <img src="http://static.photos/technology/320x240/10" alt="Design Kit Pro">
-                            </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">Design Kit Pro</h4>
-                                <p class="product-card-page-desc">Complete design system with 500+ components</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">$49.00</span>
-                                    <span class="product-sales-tag">142 sales</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-active">Active</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
-                            </div>
+                    <div class="orders-card">
+                        <div class="card-header">
+                            <h3>Recent Orders</h3>
+                            <a href="#" class="view-all">View All</a>
                         </div>
-
-                        <!-- Product 2 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge digital">Digital</span>
-                                <img src="http://static.photos/minimal/320x240/22" alt="UI Template Pack">
-                            </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">UI Template Pack</h4>
-                                <p class="product-card-page-desc">Premium UI templates for modern apps</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">$29.00</span>
-                                    <span class="product-sales-tag">98 sales</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-active">Active</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
-                            </div>
+                        <div class="orders-table-wrapper">
+                            <table class="orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Customer</th>
+                                        <th>Product</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="order-id">#7291</td>
+                                        <td>Sarah J.</td>
+                                        <td>Design Kit Pro</td>
+                                        <td>$45.00</td>
+                                        <td><span class="status-badge completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="order-id">#7290</td>
+                                        <td>Mike P.</td>
+                                        <td>UI Template Pack</td>
+                                        <td>$29.00</td>
+                                        <td><span class="status-badge processing">Processing</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="order-id">#7289</td>
+                                        <td>Emily C.</td>
+                                        <td>Icon Bundle</td>
+                                        <td>$19.00</td>
+                                        <td><span class="status-badge completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="order-id">#7288</td>
+                                        <td>David K.</td>
+                                        <td>WP Theme</td>
+                                        <td>$59.00</td>
+                                        <td><span class="status-badge refunded">Refunded</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="order-id">#7287</td>
+                                        <td>Anna S.</td>
+                                        <td>E-book: Growth</td>
+                                        <td>$15.00</td>
+                                        <td><span class="status-badge completed">Completed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Product 3 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge digital">Digital</span>
-                                <img src="http://static.photos/workspace/320x240/33" alt="Code Snippets">
+                <!-- Top Products -->
+                <div class="products-section">
+                    <div class="card-header">
+                        <h3>Top Products</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="http://static.photos/technology/200x200/10" alt="Design Kit Pro">
                             </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">Code Snippets</h4>
-                                <p class="product-card-page-desc">200+ reusable code snippets for developers</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">$19.00</span>
-                                    <span class="product-sales-tag">76 sales</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-active">Active</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
+                            <div class="product-info">
+                                <span class="product-name">Design Kit Pro</span>
+                                <!-- <span class="product-price">$45.00</span> -->
                             </div>
+                            <div class="product-price">
+                                <span class="product-price">$45.00</span>
+                            </div>
+                            <span class="product-sales">234 sales</span>
                         </div>
-
-                        <!-- Product 4 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge paid">Paid</span>
-                                <img src="http://static.photos/education/320x240/44" alt="Ebook Bundle">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="http://static.photos/technology/200x200/25" alt="UI Template Pack">
                             </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">Ebook Bundle</h4>
-                                <p class="product-card-page-desc">5 ebook bundle on design and development</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">$39.00</span>
-                                    <span class="product-sales-tag">54 sales</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-draft">Draft</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
+                            <div class="product-info">
+                                <span class="product-name">UI Template Pack</span>
+                                <!-- <span class="product-price">$29.00</span> -->
                             </div>
+                            <div class="product-price">
+                                <span class="product-price">$29.00</span>
+                            </div>
+                            <span class="product-sales">189 sales</span>
                         </div>
-
-                        <!-- Product 5 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge free">Free</span>
-                                <img src="http://static.photos/abstract/320x240/55" alt="Icon Set">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="http://static.photos/minimal/200x200/15" alt="Icon Bundle">
                             </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">Icon Set</h4>
-                                <p class="product-card-page-desc">1000+ handcrafted vector icons</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">Free</span>
-                                    <span class="product-sales-tag">230 downloads</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-active">Active</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
+                            <div class="product-info">
+                                <span class="product-name">Icon Bundle</span>
+                                <!-- <span class="product-price">$19.00</span> -->
                             </div>
+                            <div class="product-price">
+                                <span class="product-price">$19.00</span>
+                            </div>
+                            <span class="product-sales">156 sales</span>
                         </div>
-
-                        <!-- Product 6 -->
-                        <div class="product-card-page">
-                            <div class="product-card-page-img">
-                                <span class="product-badge physical">Physical</span>
-                                <img src="http://static.photos/nature/320x240/66" alt="Sticker Pack">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="http://static.photos/workspace/200x200/30" alt="WordPress Theme">
                             </div>
-                            <div class="product-card-page-body">
-                                <h4 class="product-card-page-name">Sticker Pack</h4>
-                                <p class="product-card-page-desc">Premium vinyl sticker collection</p>
-                                <div class="product-card-page-meta">
-                                    <span class="product-price-tag">$12.00</span>
-                                    <span class="product-sales-tag">31 sales</span>
-                                </div>
-                                <div class="product-card-page-footer">
-                                    <span class="product-status-active">Active</span>
-                                    <button class="product-action-btn"><i data-lucide="more-horizontal"></i></button>
-                                </div>
+                            <div class="product-info">
+                                <span class="product-name">WordPress Theme</span>
+                                <!-- <span class="product-price">$59.00</span> -->
                             </div>
+                            <div class="product-price">
+                                <span class="product-price">$59.00</span>
+                            </div>
+                            <span class="product-sales">98 sales</span>
                         </div>
                     </div>
                 </div>
@@ -533,238 +331,219 @@
         </main>
     </div>
 
-    <!-- Create Product Side Panel -->
-    <div class="side-panel-overlay" id="sidePanelOverlay"></div>
-    <div class="side-panel" id="sidePanel">
-        <div class="side-panel-header">
-            <h2>Create Product</h2>
-            <button class="side-panel-close" id="closeSidePanel">
-                <i data-lucide="x"></i>
-            </button>
+    <!-- Create Product Slide Panel -->
+    <div class="slide-overlay" id="slideOverlay" onclick="closeCreateProduct()"></div>
+    <div class="slide-panel" id="slidePanel">
+        <div class="panel-header">
+            <h3>Create Product</h3>
+            <button class="panel-close" onclick="closeCreateProduct()"><i data-lucide="x"></i></button>
         </div>
-        <div class="side-panel-body">
-            <div class="form-group">
-                <label>Product Name</label>
-                <input type="text" class="form-input" placeholder="Enter product name">
-            </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <textarea class="form-input form-textarea" placeholder="Describe your product..." rows="3"></textarea>
-            </div>
-
-            <div class="form-row">
+        <div class="panel-body">
+            <form id="createProductForm" onsubmit="return false;">
                 <div class="form-group">
-                    <label>Base Price</label>
-                    <input type="number" class="form-input" placeholder="0.00">
+                    <label>Product Name</label>
+                    <input type="text" placeholder="Enter product name">
                 </div>
                 <div class="form-group">
-                    <label>Discount (%)</label>
-                    <input type="number" class="form-input" placeholder="0">
+                    <label>Description</label>
+                    <textarea placeholder="Describe your product" rows="3"></textarea>
                 </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Product Type</label>
-                    <div class="custom-dropdown" data-dropdown="productType">
-                        <div class="dropdown-trigger">
-                            <span>Paid</span>
-                            <i data-lucide="chevron-down"></i>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Base Price</label>
+                        <input type="number" placeholder="0.00" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount %</label>
+                        <input type="number" placeholder="0" min="0" max="100">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Product Type</label>
+                        <div class="custom-select-wrapper" data-id="productType">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('productType')">
+                                <span id="selected-productType">Paid</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-productType">
+                                <div class="custom-option" onclick="selectCustomOption('productType', 'paid', 'Paid')">Paid</div>
+                                <div class="custom-option" onclick="selectCustomOption('productType', 'free', 'Free')">Free</div>
+                            </div>
                         </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item active" data-value="paid">Paid</div>
-                            <div class="dropdown-item" data-value="free">Free</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Type</label>
+                        <div class="custom-select-wrapper" data-id="deliveryType">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('deliveryType')">
+                                <span id="selected-deliveryType">Digital</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-deliveryType">
+                                <div class="custom-option" onclick="selectCustomOption('deliveryType', 'digital', 'Digital')">Digital</div>
+                                <div class="custom-option" onclick="selectCustomOption('deliveryType', 'physical', 'Physical')">Physical</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Digital Category</label>
+                        <div class="custom-select-wrapper" data-id="digitalCategory">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('digitalCategory')">
+                                <span id="selected-digitalCategory">Select category</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-digitalCategory">
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'E-books', 'E-books')">E-books</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Software', 'Software')">Software</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Templates', 'Templates')">Templates</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Music', 'Music')">Music</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Videos', 'Videos')">Videos</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Courses', 'Courses')">Courses</div>
+                                <div class="custom-option" onclick="selectCustomOption('digitalCategory', 'Graphics', 'Graphics')">Graphics</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Physical Category</label>
+                        <div class="custom-select-wrapper disabled" data-id="physicalCategory">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('physicalCategory')">
+                                <span id="selected-physicalCategory">Select category</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-physicalCategory">
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Books', 'Books')">Books</div>
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Electronics', 'Electronics')">Electronics</div>
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Clothing', 'Clothing')">Clothing</div>
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Art', 'Art')">Art</div>
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Accessories', 'Accessories')">Accessories</div>
+                                <div class="custom-option" onclick="selectCustomOption('physicalCategory', 'Home & Garden', 'Home & Garden')">Home & Garden</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Product Format</label>
-                    <div class="custom-dropdown" data-dropdown="productFormat">
-                        <div class="dropdown-trigger">
-                            <span>Digital</span>
-                            <i data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item active" data-value="digital">Digital</div>
-                            <div class="dropdown-item" data-value="physical">Physical</div>
-                        </div>
+                    <label>Product Media</label>
+                    <div class="media-upload-area" onclick="document.getElementById('productMedia').click()">
+                        <i data-lucide="image"></i>
+                        <span>Click to select images</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group" id="digitalCatGroup">
-                    <label>Digital Category</label>
-                    <div class="custom-dropdown" data-dropdown="digitalCategory">
-                        <div class="dropdown-trigger">
-                            <span>Select category</span>
-                            <i data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item" data-value="ebooks">eBooks</div>
-                            <div class="dropdown-item" data-value="software">Software</div>
-                            <div class="dropdown-item" data-value="templates">Templates</div>
-                            <div class="dropdown-item" data-value="courses">Courses</div>
-                            <div class="dropdown-item" data-value="music">Music</div>
-                            <div class="dropdown-item" data-value="graphics">Graphics</div>
-                            <div class="dropdown-item" data-value="fonts">Fonts</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group disabled-group" id="physicalCatGroup">
-                    <label>Physical Category</label>
-                    <div class="custom-dropdown disabled-dropdown" data-dropdown="physicalCategory">
-                        <div class="dropdown-trigger">
-                            <span>Select category</span>
-                            <i data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item" data-value="books">Books</div>
-                            <div class="dropdown-item" data-value="electronics">Electronics</div>
-                            <div class="dropdown-item" data-value="clothing">Clothing</div>
-                            <div class="dropdown-item" data-value="accessories">Accessories</div>
-                            <div class="dropdown-item" data-value="home">Home & Garden</div>
-                            <div class="dropdown-item" data-value="toys">Toys</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Product Media</label>
-                <div class="upload-area" id="productMediaUpload">
-                    <i data-lucide="image"></i>
-                    <span>Click to upload images</span>
-                    <input type="file" multiple accept="image/*" id="productMediaInput" hidden>
-                </div>
-                <div class="media-preview" id="mediaPreview"></div>
-            </div>
-
-            <div class="form-group">
-                <label>Cover Image</label>
-                <div class="upload-area-small" id="coverImageUpload">
-                    <i data-lucide="upload"></i>
-                    <span>Upload cover image</span>
-                    <input type="file" accept="image/*" id="coverImageInput" hidden>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Digital Product File</label>
-                <div class="upload-area-small" id="digitalFileUpload">
-                    <i data-lucide="file-up"></i>
-                    <span>Upload product file</span>
-                    <input type="file" id="digitalFileInput" hidden>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Additional Info</label>
-                <textarea class="form-input form-textarea" placeholder="Any additional information..." rows="2"></textarea>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Store</label>
-                    <div class="custom-dropdown" data-dropdown="selectStore">
-                        <div class="dropdown-trigger">
-                            <span>Select store</span>
-                            <i data-lucide="chevron-down"></i>
-                        </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item" data-value="store1">Design Hub</div>
-                            <div class="dropdown-item" data-value="store2">Code Supply</div>
-                        </div>
-                    </div>
+                    <input type="file" id="productMedia" multiple accept="image/*" onchange="handleMediaUpload(this)" style="display:none">
+                    <div class="media-preview" id="mediaPreview"></div>
                 </div>
                 <div class="form-group">
-                    <label>Currency</label>
-                    <div class="custom-dropdown" data-dropdown="selectCurrency">
-                        <div class="dropdown-trigger">
-                            <span>USD</span>
-                            <i data-lucide="chevron-down"></i>
+                    <label>Upload Digital Product File</label>
+                    <div class="file-upload-area" onclick="document.getElementById('digitalFile').click()">
+                        <i data-lucide="upload"></i>
+                        <span>Click to upload file</span>
+                        <span class="file-hint">PDF, ZIP, MP4, etc.</span>
+                    </div>
+                    <input type="file" id="digitalFile" style="display:none">
+                </div>
+                <div class="form-group">
+                    <label>Product Cover Image</label>
+                    <div class="file-upload-area" onclick="document.getElementById('coverImage').click()">
+                        <i data-lucide="image"></i>
+                        <span>Click to upload cover</span>
+                    </div>
+                    <input type="file" id="coverImage" accept="image/*" style="display:none">
+                </div>
+                <div class="form-group">
+                    <label>Additional Info</label>
+                    <textarea placeholder="Any additional details..." rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Store</label>
+                        <div class="custom-select-wrapper" data-id="selectStore">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('selectStore')">
+                                <span id="selected-selectStore">Choose store</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-selectStore">
+                                <div class="custom-option" onclick="selectCustomOption('selectStore', 'Design Hub', 'Design Hub')">Design Hub</div>
+                                <div class="custom-option" onclick="selectCustomOption('selectStore', 'Tech Store', 'Tech Store')">Tech Store</div>
+                            </div>
                         </div>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item active" data-value="usd">USD</div>
-                            <div class="dropdown-item" data-value="ngn">NGN</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <div class="custom-select-wrapper" data-id="productCurrency">
+                            <div class="custom-select-trigger" onclick="toggleCustomDropdown('productCurrency')">
+                                <span id="selected-productCurrency">USD</span>
+                                <svg class="custom-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="custom-select-options" id="options-productCurrency">
+                                <div class="custom-option" onclick="selectCustomOption('productCurrency', 'USD', 'USD')">USD</div>
+                                <div class="custom-option" onclick="selectCustomOption('productCurrency', 'NGN', 'NGN')">NGN</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <button class="btn-primary btn-block" id="submitProduct">Create Product</button>
+                <button type="submit" class="submit-btn">Create Product</button>
+            </form>
         </div>
     </div>
 
     <!-- Create Store Modal -->
     <div class="modal-overlay" id="createStoreModal">
         <div class="modal">
-            <div class="modal-header">
-                <h2>Create New Store</h2>
-                <button class="modal-close" id="closeStoreModal">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
+            <button class="modal-close" onclick="closeCreateStoreModal()"><i data-lucide="x"></i></button>
+            <h3>Create Store</h3>
+            <p class="modal-subtitle">Set up your new store to start selling</p>
+            <form onsubmit="return false;">
                 <div class="form-group">
                     <label>Store Name</label>
-                    <input type="text" class="form-input" placeholder="Enter store name" id="storeNameInput">
+                    <input type="text" placeholder="Enter store name" id="storeNameInput">
                 </div>
                 <div class="form-group">
                     <label>Store URL</label>
-                    <div class="url-input-wrap">
-                        <span class="url-prefix">lynqo.com/store/</span>
-                        <input type="text" class="form-input url-input" placeholder="your-store" id="storeUrlInput">
+                    <div class="url-input-wrapper">
+                        <span class="url-prefix">lynqo.store/</span>
+                        <input type="text" placeholder="your-store" id="storeUrlInput">
                     </div>
                 </div>
                 <div class="store-limit-info">
                     <i data-lucide="info"></i>
-                    <span>You can create <strong>2 free stores</strong>. You've used <strong>0 of 2</strong> free stores.</span>
+                    <span>You can create <strong>2 free stores</strong>. After that, a fee applies.</span>
                 </div>
-                <button class="btn-primary btn-block" id="submitStore">Create Store</button>
-            </div>
+                <button type="submit" class="submit-btn" onclick="submitCreateStore()">Create Store</button>
+            </form>
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="modal-overlay" id="paymentModal">
+    <!-- Pay for Store Modal -->
+    <div class="modal-overlay" id="payStoreModal">
         <div class="modal">
-            <div class="modal-header">
-                <h2>Store Limit Reached</h2>
-                <button class="modal-close" id="closePaymentModal">
-                    <i data-lucide="x"></i>
+            <button class="modal-close" onclick="closePayStoreModal()"><i data-lucide="x"></i></button>
+            <h3>Create Additional Store</h3>
+            <p class="modal-subtitle">You've used your 2 free stores. Choose a payment method to create more.</p>
+            <div class="payment-options">
+                <button class="payment-option" onclick="selectPayment('flutterwave')">
+                    <div class="payment-icon flutterwave-icon">F</div>
+                    <span>Pay with Flutterwave</span>
+                </button>
+                <button class="payment-option" onclick="selectPayment('grey')">
+                    <div class="payment-icon grey-icon">G</div>
+                    <span>Pay with Grey</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="payment-info">
-                    <div class="payment-icon">
-                        <i data-lucide="store"></i>
-                    </div>
-                    <p>You've reached your free store limit. Upgrade to create more stores.</p>
-                </div>
-                <div class="payment-options">
-                    <button class="payment-btn flutterwave">
-                        <span class="payment-btn-label">Pay with</span>
-                        <strong>Flutterwave</strong>
-                    </button>
-                    <button class="payment-btn grey">
-                        <span class="payment-btn-label">Pay with</span>
-                        <strong>Grey</strong>
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i data-lucide="check-circle"></i>
-        <span id="toastMessage">Action completed successfully</span>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
